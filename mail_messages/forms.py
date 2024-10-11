@@ -24,3 +24,6 @@ class MailingAttemptForm(forms.ModelForm):
     class Meta:
         model = MailingAttempt
         fields = '__all__'
+        widgets = {
+            'start_datetime': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }

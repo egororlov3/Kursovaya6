@@ -4,10 +4,14 @@ from .views import (
     MessageListView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView,
     MailingListView, MailingDetailView, MailingCreateView, MailingUpdateView, MailingDeleteView,
     MailingAttemptListView, MailingAttemptDetailView, MailingAttemptCreateView, MailingAttemptUpdateView,
-    MailingAttemptDeleteView,
+    MailingAttemptDeleteView, MainView,
 )
 
+app_name = "mail_messages"
+
 urlpatterns = [
+    path('', (MainView.as_view()), name='main'),
+
     # КЛИЕНТ
     path('clients/', ClientListView.as_view(), name='client_list'),
     path('clients/<int:pk>/', ClientDetailView.as_view(), name='client_detail'),

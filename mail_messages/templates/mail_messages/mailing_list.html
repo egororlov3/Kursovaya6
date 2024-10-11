@@ -1,0 +1,28 @@
+{% extends 'mail_messages/includes/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-center">Список рассылок</h2>
+        <a href="{% url 'mail_messages:mailing_create' %}" class="btn btn-primary">Создать новую рассылку</a>
+    </div>
+
+    <div class="list-group">
+        {% for mailing in mailings %}
+            <a href="{% url 'mail_messages:mailing_detail' mailing.id %}" class="list-group-item list-group-item-action">
+                <h5 class="mb-1">{{ mailing.title }}</h5>
+                <p class="mb-1">{{ mailing.start_datetime|date:"d.m.Y H:i" }} - {{ mailing.status }}</p>
+                <small>Периодичность: {{ mailing.periodicity }}</small>
+                <small>Клиенты:
+                    {% for client in mailing.clients.all %}
+                        {{ client.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </small>
+            </a>
+        {% empty %}
+            <p class="text-center">Рассылки отсутствуют.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

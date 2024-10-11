@@ -44,18 +44,19 @@ class Mailing(models.Model):
         ('completed', 'Завершена'),
     ]
 
-    start_datetime = models.DateTimeField(verbose_name='дата и время первой рассылки')
-    periodicity = models.CharField(max_length=10, choices=PERIODICITY_CHOICES, verbose_name='переодичность рассылки')
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created', verbose_name='статус рассылки')
-    message = models.OneToOneField(Message, on_delete=models.CASCADE, verbose_name='сообщение')
-    clients = models.ManyToManyField(Client, verbose_name='клиент')
+    title = models.CharField(max_length=100, default='Без названия', verbose_name='Название рассылки')
+    start_datetime = models.DateTimeField(verbose_name='Дата и время первой рассылки')
+    periodicity = models.CharField(max_length=10, choices=PERIODICITY_CHOICES, verbose_name='Периодичность рассылки')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created', verbose_name='Статус рассылки')
+    message = models.OneToOneField(Message, on_delete=models.CASCADE, verbose_name='Сообщение')
+    clients = models.ManyToManyField(Client, verbose_name='Клиенты')
 
     def __str__(self):
-        return f"Mailing {self.id} - {self.status}"
+        return f"{self.title} (ID: {self.id}) - {self.status}"
 
     class Meta:
-        verbose_name = 'рассылка'
-        verbose_name_plural = 'рассылки'
+        verbose_name = 'Рассылка'
+        verbose_name_plural = 'Рассылки'
 
 
 # Попытка рассылки

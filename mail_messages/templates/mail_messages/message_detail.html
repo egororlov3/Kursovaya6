@@ -1,0 +1,19 @@
+{% extends 'mail_messages/includes/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2>Message Details</h2>
+        <div class="card">
+            <div class="card-header">
+                <h4>{{ message.subject }}</h4>
+            </div>
+            <div class="card-body">
+                <p>{{ message.body }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'mail_messages:message_update' message.id %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'mail_messages:message_list' %}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

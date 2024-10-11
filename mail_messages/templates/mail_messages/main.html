@@ -1,0 +1,26 @@
+{% extends 'mail_messages/includes/base.html' %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Наши Рассылки</h1>
+    <p class="lead">Управляйте вашими клиентами, сообщениями и рассылками легко и эффективно.</p>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Навигация</h5>
+                    <p class="card-text">Выберите один из разделов для управления рассылками:</p>
+                    <div class="d-grid gap-2 d-md-block">
+                        <a href="{% url 'mail_messages:client_list' %}" class="btn btn-outline-primary btn-lg m-2">Клиенты</a>
+                        <a href="{% url 'mail_messages:message_list' %}" class="btn btn-outline-success btn-lg m-2">Сообщения</a>
+                        <a href="{% url 'mail_messages:mailing_list' %}" class="btn btn-outline-info btn-lg m-2">Рассылки</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'mail_messages/includes/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Детали рассылки</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ mailing.subject }}</h5>
+            <p class="card-text">{{ mailing.message.body }}</p>
+            <p><strong>Дата начала:</strong> {{ mailing.start_date|date:"d.m.Y H:i" }}</p>
+            <p><strong>Периодичность:</strong> {{ mailing.periodicity }}</p>
+            <p><strong>Статус:</strong> {{ mailing.status }}</p>
+
+            <a href="{% url 'mail_messages:mailing_update' mailing.id %}" class="btn btn-warning">Редактировать</a>
+            <a href="{% url 'mail_messages:mailing_delete' mailing.id %}" class="btn btn-danger">Удалить</a>
+            <a href="{% url 'mail_messages:mailing_list' %}" class="btn btn-secondary">Назад к списку</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

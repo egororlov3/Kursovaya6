@@ -1,0 +1,12 @@
+{% extends 'mail_messages/includes/base.html' %}
+
+{% block content %}
+<body>
+    <h1>Are you sure you want to delete "{{ client.name }}"?</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+    </form>
+    <a href="{% url 'mail_messages:client_detail' client.id %}">Cancel</a>
+</body>
+{% endblock %}

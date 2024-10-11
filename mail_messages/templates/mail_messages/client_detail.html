@@ -1,0 +1,14 @@
+{% extends 'mail_messages/includes/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">{{ client.name }}</h1>
+    <p><strong>Email:</strong> {{ client.email }}</p>
+    <p><strong>Комментарий:</strong> {{ client.comment }}</p>
+
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'mail_messages:client_update' client.id %}" class="btn btn-warning">Редактировать</a>
+        <a href="{% url 'mail_messages:client_delete' client.id %}" class="btn btn-danger">Удалить</a>
+    </div>
+</div>
+{% endblock %}
