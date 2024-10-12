@@ -2,12 +2,12 @@
 
 {% block content %}
 <body>
-    <h1>{{ view.action }} Client</h1>
+    <h1>{{ view.action }} Клиент</h1>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save</button>
+        <button type="submit">Сохранить</button>
     </form>
-    <a href="{% url 'mail_messages:client_list' %}">Back to Client List</a>
+    <a href="{% url 'mail_messages:client_list' %}">Вернуться к списку клиентов</a>
 </body>
 {% endblock %}

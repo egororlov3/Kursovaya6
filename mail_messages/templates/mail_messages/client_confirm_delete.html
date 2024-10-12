@@ -2,11 +2,11 @@
 
 {% block content %}
 <body>
-    <h1>Are you sure you want to delete "{{ client.name }}"?</h1>
+    <h1>Вы уверены что хотите удалить клиента "{{ client.name }}"?</h1>
     <form method="POST">
         {% csrf_token %}
-        <button type="submit">Yes, delete</button>
+        <button type="submit">Удалить</button>
     </form>
-    <a href="{% url 'mail_messages:client_detail' client.id %}">Cancel</a>
+    <a href="{% url 'mail_messages:client_detail' client.id %}">Отмена</a>
 </body>
 {% endblock %}

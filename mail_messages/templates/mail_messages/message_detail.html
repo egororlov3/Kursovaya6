@@ -2,17 +2,19 @@
 
 {% block content %}
     <div class="container">
-        <h2>Message Details</h2>
+        <h2>Сообщение</h2>
         <div class="card">
             <div class="card-header">
-                <h4>{{ message.subject }}</h4>
+                <h2>{{ message.subject }}</h2>
             </div>
             <div class="card-body">
                 <p>{{ message.body }}</p>
             </div>
             <div class="card-footer">
-                <a href="{% url 'mail_messages:message_update' message.id %}" class="btn btn-warning">Edit</a>
-                <a href="{% url 'mail_messages:message_list' %}" class="btn btn-secondary">Back to List</a>
+                {% if message.owner == user %}
+                <a href="{% url 'mail_messages:message_update' message.id %}" class="btn btn-warning">Редактировать</a>
+                <a href="{% url 'mail_messages:message_list' %}" class="btn btn-secondary">Вернуться к списку</a>
+                {% endif %}
             </div>
         </div>
     </div>

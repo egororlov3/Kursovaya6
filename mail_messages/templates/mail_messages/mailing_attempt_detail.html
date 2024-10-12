@@ -1,0 +1,13 @@
+{% extends 'mail_messages/includes/base.html' %}
+
+{% block content %}
+  <h1>Детали попытки рассылки</h1>
+  <p><strong>ID:</strong> {{ attempt.id }}</p>
+  <p><strong>Рассылка:</strong> {{ attempt.mailing }}</p>
+  <p><strong>Дата и время:</strong> {{ attempt.attempt_datetime }}</p>
+  <p><strong>Статус:</strong> {{ attempt.get_status_display }}</p>
+  <p><strong>Ответ сервера:</strong> {{ zattempt.server_response }}</p>
+
+  <a href="{% url 'mail_messages:mailing_attempt_update' attempt.id %}">Редактировать</a> |
+  <a href="{% url 'mail_messages:mailing_attempt_list' %}">Вернуться к списку</a>
+{% endblock %}

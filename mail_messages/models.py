@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 NULLABLE = {'blank': True, 'null': True}
@@ -8,6 +9,11 @@ class Client(models.Model):
     email = models.EmailField(unique=True, verbose_name='почта')
     full_name = models.CharField(max_length=255, verbose_name='ФИО')
     comment = models.TextField(**NULLABLE, verbose_name='комментарий')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              on_delete=models.CASCADE,
+                              verbose_name='владелец',
+                              related_name='clients'
+                              )
 
     def __str__(self):
         return self.full_name
@@ -21,6 +27,11 @@ class Client(models.Model):
 class Message(models.Model):
     subject = models.CharField(max_length=255, verbose_name='тема письма')
     body = models.TextField(verbose_name='тело письма')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              on_delete=models.CASCADE,
+                              verbose_name='владелец',
+                              related_name='messages'
+                              )
 
     def __str__(self):
         return self.subject
@@ -50,6 +61,11 @@ class Mailing(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created', verbose_name='Статус рассылки')
     message = models.OneToOneField(Message, on_delete=models.CASCADE, verbose_name='Сообщение')
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              on_delete=models.CASCADE,
+                              verbose_name='владелец',
+                              related_name='mailings'
+                              )
 
     def __str__(self):
         return f"{self.title} (ID: {self.id}) - {self.status}"

@@ -1,0 +1,12 @@
+{% extends 'mail_messages/includes/base.html' %}
+
+{% block content %}
+  <h1>Удалить попытку рассылки</h1>
+  <p>Вы уверены, что хотите удалить попытку рассылки "{{ mailing_attempt }}"?</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Удалить</button>
+  </form>
+  <a href="{% url 'mail_messages:mailing_attempt_list' %}">Отмена</a>
+{% endblock %}

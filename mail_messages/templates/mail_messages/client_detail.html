@@ -7,8 +7,10 @@
     <p><strong>Комментарий:</strong> {{ client.comment }}</p>
 
     <div class="d-flex justify-content-between">
+        {% if client.owner == user %}
         <a href="{% url 'mail_messages:client_update' client.id %}" class="btn btn-warning">Редактировать</a>
         <a href="{% url 'mail_messages:client_delete' client.id %}" class="btn btn-danger">Удалить</a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -9,7 +9,8 @@
 
     <div class="list-group">
         {% for client in clients %}
-            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            {% if client.owner == user %}
+            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center mx-auto" style="max-width: 1600px;">
                 <div>
                     <h5 class="mb-1">{{ client.name }}</h5>
                     <p class="mb-1">{{ client.email }}</p>
@@ -21,10 +22,10 @@
                     <a href="{% url 'mail_messages:client_delete' client.id %}" class="btn btn-sm btn-danger">Удалить</a>
                 </div>
             </div>
+            {% endif %}
         {% empty %}
             <p class="text-center">Клиенты отсутствуют.</p>
         {% endfor %}
     </div>
 </div>
 {% endblock %}
-

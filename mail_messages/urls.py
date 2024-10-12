@@ -34,9 +34,9 @@ urlpatterns = [
     path('mailing/<int:pk>/delete/', MailingDeleteView.as_view(), name='mailing_delete'),
 
     # ПОПЫТКА РАССЫЛКИ
-    path('mailing-attempt/', MailingAttemptListView.as_view(), name='mailing-attempt_list'),
-    path('mailing-attempt/<int:pk>/', MailingAttemptDetailView.as_view(), name='mailing-attempt_detail'),
-    path('mailing-attempt/create/', MailingAttemptCreateView.as_view(), name='mailing-attempt_create'),
-    path('mailing-attempt/<int:pk>/update/', MailingAttemptUpdateView.as_view(), name='mailing-attempt_update'),
-    path('mailing-attempt/<int:pk>/delete/', MailingAttemptDeleteView.as_view(), name='mailing-attempt_delete'),
+    path('mailing-attempt/', MailingAttemptListView.as_view(), name='mailing_attempt_list'),
+    path('mailing-attempt/<int:pk>/', MailingAttemptDetailView.as_view(), name='mailing_attempt_detail'),
+    path('mailing-attempt/create/', MailingAttemptCreateView.as_view(), name='mailing_attempt_create'),
+    path('mailing-attempt/<int:pk>/update/', MailingAttemptUpdateView.as_view(), name='mailing_attempt_update'),
+    path('mailing-attempt/<int:pk>/delete/', MailingAttemptDeleteView.as_view(), name='mailing_attempt_delete'),
 ]

@@ -17,6 +17,7 @@
             </thead>
             <tbody>
                 {% for message in messages %}
+                {% if message.owner == user %}
                 <tr>
                     <td>{{ message.subject }}</td>
                     <td>{{ message.body|truncatewords:10 }}</td>
@@ -24,13 +25,12 @@
                         <a href="{% url 'mail_messages:message_detail' message.id %}" class="btn btn-info btn-sm">Просмотр</a>
                         <a href="{% url 'mail_messages:message_update' message.id %}" class="btn btn-warning btn-sm">Редактировать</a>
                         <a href="{% url 'mail_messages:message_delete' message.id %}" class="btn btn-danger btn-sm">Удалить</a>
+                        {% endif %}
                     </td>
+                    {% endfor %}
                 </tr>
-                {% empty %}
                 <tr>
-                    <td colspan="3" class="text-center">Сообщения отсутствуют</td>
                 </tr>
-                {% endfor %}
             </tbody>
         </table>
     </div>

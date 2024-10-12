@@ -1,0 +1,17 @@
+{% extends 'mail_messages/includes/base.html' %}
+
+{% block title %}
+    Профиль
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Профиль</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+                <button type="submit" class="btn btn-success" >Сохранить</button>
+                <a class="btn btn-outline-secondary" href="{% url 'mail_messages:main' %}">Вернуться на главную</a>
+    </div>
+{% endblock %}
