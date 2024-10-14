@@ -2,7 +2,7 @@
 
 {% block content %}
 <body>
-    <h1>Вы уверены что хотите удалить клиента "{{ client.name }}"?</h1>
+    <h1>Вы уверены что хотите удалить клиента "{{ client.email }}"?</h1>
     <form method="POST">
         {% csrf_token %}
         <button type="submit">Удалить</button>

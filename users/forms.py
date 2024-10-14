@@ -14,9 +14,15 @@ class RegistrationForm(UserCreationForm):
 class UserProfileForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'phone', 'country', 'avatar')
+        fields = ('email', 'first_name', 'last_name', 'phone', 'country', 'avatar', 'blocked')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.fields['password'].widget = forms.HiddenInput()
+
+
+class UserAdminForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['blocked']  # Разрешаем редактировать только поле blocked

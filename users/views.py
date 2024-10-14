@@ -1,13 +1,17 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
+from django.views import View
 from django.views.generic import CreateView, UpdateView
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
-from .forms import RegistrationForm, UserProfileForm
+from .forms import RegistrationForm, UserProfileForm, UserAdminForm
 from .models import User
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from .tokens import account_activation_token
@@ -76,3 +80,20 @@ def activate(request, uidb64, token):
         return redirect('users:login')
     else:
         return render(request, 'users/activation_invalid.html')
+
+
+class BlockUserView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = 'users.can_block_users'
+
+    def post(self, request, *args, **kwargs):
+        user = get_object_or_404(User, id=self.kwargs.get('pk'))
+
+        if user.blocked:
+            return HttpResponse('Этот пользователь уже заблокирован.', status=400)
+
+        # Блокируем пользователя
+        user.blocked = True
+        user.save()
+
+        return HttpResponse(f'Пользователь "{user.username}" успешно заблокирован.')
+

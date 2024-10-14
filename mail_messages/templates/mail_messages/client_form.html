@@ -6,8 +6,7 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Сохранить</button>
-    </form>
-    <a href="{% url 'mail_messages:client_list' %}">Вернуться к списку клиентов</a>
+        <button type="submit" class="btn btn-primary">{% if message %}Редактировать{% else %}Создать{% endif %}</button>
+            <a href="{% url 'mail_messages:message_list' %}" class="btn btn-secondary">Отмена</a>
 </body>
 {% endblock %}

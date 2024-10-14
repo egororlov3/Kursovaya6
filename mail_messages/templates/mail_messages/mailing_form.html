@@ -8,8 +8,8 @@
         {% csrf_token %}
         {{ form.as_p }}
         <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">Сохранить</button>
-            <a href="{% url 'mail_messages:mailing_list' %}" class="btn btn-secondary">Отмена</a>
+            <button type="submit" class="btn btn-primary">{% if message %}Редактировать{% else %}Создать{% endif %}</button>
+            <a href="{% url 'mail_messages:message_list' %}" class="btn btn-secondary">Отмена</a>
         </div>
     </form>
 </div>

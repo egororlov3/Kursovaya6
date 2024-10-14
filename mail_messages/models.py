@@ -61,6 +61,7 @@ class Mailing(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created', verbose_name='Статус рассылки')
     message = models.OneToOneField(Message, on_delete=models.CASCADE, verbose_name='Сообщение')
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
+    is_active = models.BooleanField(default=True, verbose_name='активность рассылки')
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE,
                               verbose_name='владелец',
@@ -73,6 +74,10 @@ class Mailing(models.Model):
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
+
+        permissions = [
+            ("can_disable_mailing", "Can disable mailing"),
+        ]
 
 
 # Попытка рассылки

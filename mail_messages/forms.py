@@ -5,19 +5,19 @@ from .models import Client, Message, Mailing, MailingAttempt
 class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = '__all__'
+        fields = ['email', 'full_name', 'comment']
 
 
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = '__all__'
+        fields = ['subject', 'body']
 
 
 class MailingForm(forms.ModelForm):
     class Meta:
         model = Mailing
-        fields = '__all__'
+        fields = ['title', 'start_datetime', 'periodicity', 'status', 'message', 'clients', 'is_active']
 
 
 class MailingAttemptForm(forms.ModelForm):
@@ -27,3 +27,10 @@ class MailingAttemptForm(forms.ModelForm):
         widgets = {
             'start_datetime': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
+
+
+class MailingAdminForm(forms.ModelForm):
+    class Meta:
+        model = Mailing
+        fields = ['is_active']
+

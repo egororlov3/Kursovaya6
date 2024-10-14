@@ -29,9 +29,18 @@ class User(AbstractUser):
     phone = models.CharField(max_length=35, verbose_name='телефон', **NULLABLE)
     avatar = models.ImageField(upload_to='users/', verbose_name='аватар', **NULLABLE)
     country = models.CharField(max_length=80, verbose_name='страна', **NULLABLE)
-    email_verified = models.BooleanField(default=False)
+    email_verified = models.BooleanField(default=False, verbose_name='верификация')
+    blocked = models.BooleanField(default=False, verbose_name='блокировка')
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
+
+    class Meta:
+        verbose_name = 'пользователь'
+        verbose_name_plural = 'пользователи'
+
+        permissions = [
+            ("can_block_users", "Can block users"),
+        ]

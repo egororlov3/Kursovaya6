@@ -10,6 +10,7 @@
 
     <div class="list-group">
         {% for mailing in mailings %}
+        {% if mailing.owner == user %}
             <a href="{% url 'mail_messages:mailing_detail' mailing.id %}" class="list-group-item list-group-item-action">
                 <h5 class="mb-1">{{ mailing.title }}</h5>
                 <p class="mb-1">{{ mailing.start_datetime|date:"d.m.Y H:i" }} - {{ mailing.status }}</p>
@@ -19,6 +20,7 @@
                         {{ client.full_name }}{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </small>
+                {% endif %}
             </a>
         {% empty %}
             <p class="text-center">Рассылки отсутствуют.</p>

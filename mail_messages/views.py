@@ -1,10 +1,11 @@
+from django.contrib.auth import admin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Client, Message, Mailing, MailingAttempt
-from .forms import ClientForm, MessageForm, MailingForm, MailingAttemptForm
+from .forms import ClientForm, MessageForm, MailingForm, MailingAttemptForm, MailingAdminForm
 
 
 class MainView(ListView):
@@ -53,7 +54,7 @@ class ClientUpdateView(LoginRequiredMixin, UpdateView):
         return Mailing.objects.filter(owner=self.request.user)
 
     def get_object(self, queryset=None):
-        message = get_object_or_404(Message, id=self.kwargs.get('pk'))
+        message = get_object_or_404(Client, id=self.kwargs.get('pk'))
 
         if message.owner != self.request.user:
             raise Http404()
@@ -70,7 +71,7 @@ class ClientDeleteView(LoginRequiredMixin, DeleteView):
         return Mailing.objects.filter(owner=self.request.user)
 
     def get_object(self, queryset=None):
-        message = get_object_or_404(Message, id=self.kwargs.get('pk'))
+        message = get_object_or_404(Client, id=self.kwargs.get('pk'))
 
         if message.owner != self.request.user:
             raise Http404()
@@ -178,12 +179,21 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
     form_class = MailingForm
     template_name = 'mail_messages/mailing_form.html'
     success_url = reverse_lazy('mail_messages:mailing_list')
+    permission_required = 'mail_messages.can_disable_mailing'
 
     def get_queryset(self):
         return Mailing.objects.filter(owner=self.request.user)
 
+    def form_valid(self, form):
+        if not self.request.user.has_perm('mail_messages.can_disable_mailing'):
+            return HttpResponse('У вас нет прав на отключение рассылки.', status=403)
+
+        # Отключаем рассылку
+        form.instance.is_active = False
+        return super().form_valid(form)
+
     def get_object(self, queryset=None):
-        message = get_object_or_404(Message, id=self.kwargs.get('pk'))
+        message = get_object_or_404(Mailing, id=self.kwargs.get('pk'))
 
         if message.owner != self.request.user:
             raise Http404()
@@ -200,7 +210,7 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
         return Mailing.objects.filter(owner=self.request.user)
 
     def get_object(self, queryset=None):
-        message = get_object_or_404(Message, id=self.kwargs.get('pk'))
+        message = get_object_or_404(Mailing, id=self.kwargs.get('pk'))
 
         if message.owner != self.request.user:
             raise Http404()
