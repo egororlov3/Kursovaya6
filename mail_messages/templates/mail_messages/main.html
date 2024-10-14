@@ -7,19 +7,58 @@
 </div>
 
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-4">
         <div class="col-md-8">
             <div class="card shadow-lg mb-4">
                 <div class="card-body text-center">
                     <h5 class="card-title">Навигация</h5>
-                    <p class="card-text">Выберите один из разделов для управления рассылками:</p>
-                    <div class="d-grid gap-2 d-md-block">
-                        <a href="{% url 'mail_messages:client_list' %}" class="btn btn-outline-primary btn-lg m-2">Клиенты</a>
-                        <a href="{% url 'mail_messages:message_list' %}" class="btn btn-outline-success btn-lg m-2">Сообщения</a>
-                        <a href="{% url 'mail_messages:mailing_list' %}" class="btn btn-outline-info btn-lg m-2">Рассылки</a>
+                        <div class="d-grid gap-2">
+                        <a href="{% url 'blog:blog_list' %}" class="btn btn-outline-primary btn-lg mb-3">Блог</a>
+                            <p class="card-text">Выберите один из разделов для управления рассылками:</p>
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'mail_messages:client_list' %}" class="btn btn-outline-primary btn-lg m-2">Клиенты</a>
+                            <a href="{% url 'mail_messages:message_list' %}" class="btn btn-outline-success btn-lg m-2">Сообщения</a>
+                            <a href="{% url 'mail_messages:mailing_list' %}" class="btn btn-outline-info btn-lg m-2">Рассылки</a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12 text-center">
+            <h3 class="display-5">Случайные статьи из блога:</h3>
+            <div class="row">
+                {% for article in random_articles %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}" style="height: 200px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ article.title }}</h5>
+                                <a href="{% url 'blog:blog_detail' article.pk %}" class="btn btn-primary mt-auto">Читать далее</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="alert alert-warning">Нет доступных статей.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center mt-4">
+        <div class="col-md-4">
+            <h6>Количество рассылок всего:</h6>
+            <p class="display-4 fw-normal">{{ total_mailings }}</p>
+        </div>
+        <div class="col-md-4">
+            <h6>Количество активных рассылок:</h6>
+            <p class="display-4 fw-normal">{{ active_mailings }}</p>
+        </div>
+        <div class="col-md-4">
+            <h6>Количество уникальных клиентов:</h6>
+            <p class="display-4 fw-normal">{{ unique_clients }}</p>
         </div>
     </div>
 </div>

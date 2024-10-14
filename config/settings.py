@@ -139,7 +139,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Настройки почтового сервера
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
@@ -154,3 +154,14 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/users/'
+
+# CACHES
+CACHE_ENABLED = os.getenv('CACHE_ENABLED') == 'True'
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('CACHE_LOCATION'),
+        }
+    }

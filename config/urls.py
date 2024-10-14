@@ -18,7 +18,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-
+from blog import urls
+import blog
 from users import urls
 import users
 from mail_messages import urls
@@ -28,4 +29,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(mail_messages.urls, namespace='mail_messages')),
     path('users/', include(users.urls, namespace='users')),
+    path('blog/', include(blog.urls, namespace='blog')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

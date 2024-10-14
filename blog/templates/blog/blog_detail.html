@@ -1,0 +1,12 @@
+{% extends 'mail_messages/includes/base.html' %}
+
+{% block content %}
+    <h1 class="mb-4 mt-0">{{ blog.title }}</h1>
+    <div class="text-center mb-4">
+        <img src="{{ blog.image.url }}" class="img-fluid" style="max-width: 30%; height: auto;" alt="{{ blog.title }}">
+    </div>
+    <p>{{ blog.content }}</p>
+    <p class="text-muted">Просмотров: {{ blog.views }} | Дата: {{ blog.published_date|date:"d M Y" }}</p>
+    <a href="{% url 'blog:blog_list' %}" class="btn btn-secondary mt-3">Назад к списку</a>
+{% endblock %}
+

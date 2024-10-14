@@ -64,13 +64,12 @@
                         <span class="text-primary">HELLO SKYPRO</span>
                         <span class="text-primary"></span>
                         <span class="text-primary"></span>
-
                     </p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <h4 class="text-white">Меню</h4>
                     <ul class="list-unstyled">
-                {% if user.is_authenticated %}
+                        {% if user.is_authenticated %}
                            <li><a href="{% url 'users:profile' %}" class="btn btn-outline-secondary">ПРОФИЛЬ</a></li>
                            <li>
                               <form method="POST" action="{% url 'users:logout' %}">
@@ -78,11 +77,11 @@
                                  <button type="submit" class="btn btn-outline-secondary">ВЫЙТИ</button>
                               </form>
                            </li>
-              {% else %}
+                        {% else %}
                            <li><a href="{% url 'users:login' %}" class="btn btn-outline-secondary">ВОЙТИ</a></li>
                            <li><a href="{% url 'users:register' %}" class="btn btn-outline-secondary">РЕГИСТРАЦИЯ</a></li>
-              {% endif %}
-               <li><a href="#" class="text-white">На главную</a></li>
+                        {% endif %}
+                        <li><a href="#" class="text-white">На главную</a></li>
                     </ul>
                 </div>
             </div>
@@ -102,7 +101,6 @@
 </header>
 
 <main>
-
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
@@ -117,11 +115,9 @@
             {% endblock %}
         </div>
     </div>
-
 </main>
 
 {% include 'mail_messages/includes/inc_downstr.html' with object=object %}
-
 
 <script src="{% static 'js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
 

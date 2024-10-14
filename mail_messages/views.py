@@ -1,17 +1,38 @@
+import random
 from django.contrib.auth import admin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+from blog.models import BlogPost
 from .models import Client, Message, Mailing, MailingAttempt
 from .forms import ClientForm, MessageForm, MailingForm, MailingAttemptForm, MailingAdminForm
 
 
+@method_decorator(cache_page(60 * 5), name='dispatch')
 class MainView(ListView):
     model = Mailing
     template_name = 'mail_messages/main.html'
     context_object_name = 'object_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Получение необходимой информации
+        context['total_mailings'] = Mailing.objects.count()
+        context['active_mailings'] = Mailing.objects.filter(is_active=True).count()
+        context['unique_clients'] = Client.objects.values('email').distinct().count()
+
+        # Получение трех случайных статей из блога
+        random_articles = BlogPost.objects.all()
+        context['random_articles'] = random.sample(list(random_articles),
+                                                   min(len(random_articles), 3)) if random_articles.exists() else []
+
+        return context
 
 
 # ККЛИЕНТ
