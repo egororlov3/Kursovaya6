@@ -1,5 +1,4 @@
 import random
-from django.contrib.auth import admin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404
@@ -7,10 +6,9 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
 from blog.models import BlogPost
 from .models import Client, Message, Mailing, MailingAttempt
-from .forms import ClientForm, MessageForm, MailingForm, MailingAttemptForm, MailingAdminForm
+from .forms import ClientForm, MessageForm, MailingForm, MailingAttemptForm
 
 
 @method_decorator(cache_page(60 * 5), name='dispatch')
